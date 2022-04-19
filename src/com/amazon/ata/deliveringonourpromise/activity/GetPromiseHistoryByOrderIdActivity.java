@@ -35,6 +35,7 @@ public class GetPromiseHistoryByOrderIdActivity {
      * @return PromiseHistory containing the order and promise history for that order
      */
     public PromiseHistory getPromiseHistoryByOrderId(String orderId) {
+
         if (null == orderId) {
             throw new IllegalArgumentException("order ID cannot be null");
         }
@@ -43,13 +44,11 @@ public class GetPromiseHistoryByOrderIdActivity {
 
         List<OrderItem> customerOrderItems;
 
-        if(order == null){
+        if (order == null) {
 
-             customerOrderItems = null;
+            customerOrderItems = null;
 
-        }
-
-        else{
+        } else {
 
             customerOrderItems = order.getCustomerOrderItemList();
 
@@ -70,7 +69,7 @@ public class GetPromiseHistoryByOrderIdActivity {
         }
 
 
-            return history;
+        return history;
 
 
 

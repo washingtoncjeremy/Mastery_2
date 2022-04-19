@@ -7,6 +7,8 @@ import com.amazon.ata.order.OrderFieldValidator;
 import com.amazon.ata.ordermanipulationauthority.OrderResult;
 import com.amazon.ata.ordermanipulationauthority.OrderResultItem;
 
+
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,6 +28,7 @@ public class OrderDao implements ReadOnlyDao<String, Order> {
         omaClient = client;
     }
 
+
     /**
      * Returns an Order object corresponding to the provided orderId. If no order can be
      * found for the provided orderId, a null Order will be returned.
@@ -33,6 +36,7 @@ public class OrderDao implements ReadOnlyDao<String, Order> {
      * @param orderId the id of the order to be retrieved.
      * @return the order with the corresponding orderId.
      */
+
     @Override
     public Order get(String orderId) {
         OrderResult omaOrder = omaClient.getCustomerOrderByOrderId(orderId);
@@ -63,6 +67,7 @@ public class OrderDao implements ReadOnlyDao<String, Order> {
     }
 
     private OrderItem convertToOrderItem(OrderResultItem orderResultItem) {
+
         return OrderItem.builder()
                    .withCustomerOrderItemId(orderResultItem.getCustomerOrderItemId())
                    .withOrderId(orderResultItem.getOrderId())

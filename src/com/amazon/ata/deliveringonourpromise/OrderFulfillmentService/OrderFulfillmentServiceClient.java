@@ -1,6 +1,6 @@
 package com.amazon.ata.deliveringonourpromise.OrderFulfillmentService;
 
-import com.amazon.ata.deliverypromiseservice.service.DeliveryPromise;
+
 import com.amazon.ata.orderfulfillmentservice.OrderFulfillmentService;
 import com.amazon.ata.orderfulfillmentservice.OrderPromise;
 
@@ -8,17 +8,26 @@ public class OrderFulfillmentServiceClient {
 
     private OrderFulfillmentService ofService;
 
-    public OrderFulfillmentServiceClient(OrderFulfillmentService ofs){
+    /**
+     *
+     * @param ofs service
+     */
+    public OrderFulfillmentServiceClient(OrderFulfillmentService ofs) {
 
         this.ofService = ofs;
 
     }
 
-    public OrderPromise getOrderPromiseByOrderItemId(String orderId){
+    /**
+     *
+     * @param orderId The orders id
+     * @return Completed order for display
+     */
+    public OrderPromise getOrderPromiseByOrderItemId(String orderId) {
 
         OrderPromise orderPromise = ofService.getOrderPromise(orderId);
 
-        if(orderPromise == null) {
+        if (orderPromise == null) {
 
             return null;
 
