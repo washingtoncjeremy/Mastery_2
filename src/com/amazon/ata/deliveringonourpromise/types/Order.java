@@ -100,6 +100,7 @@ public class Order {
      * Builder for Orders. See Order documentation.
      */
     public static class Builder {
+
         private String orderId;
         private String customerId;
         private String marketplaceId;

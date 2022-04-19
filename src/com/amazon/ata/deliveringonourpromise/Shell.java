@@ -37,7 +37,7 @@ public class Shell {
     private ATAUserHandler inputHandler;
 
     // FIXME: Added to cause a problem with Spotbug
-    private String unusedPrivateString;
+    //private String unusedPrivateString;
 
     /**
      * Constructs a Shell instance that will use the given service client.
@@ -86,13 +86,24 @@ public class Shell {
         String response;
 
         do {
-            response = inputHandler.getString(ORDER_ID_PROMPT, INLINE_PROMPT).trim();
+            //System.out.println(ORDER_ID_PROMPT);
+            //System.out.println(INLINE_PROMPT);
+            String goodOrder = "111-7497023-2960775";
+            String badOrder =  "111-749023-7630574";
+            String nonExistentId = "900-0000000-0000000";
+
+            response =  inputHandler.getString(ORDER_ID_PROMPT, INLINE_PROMPT).trim();
+            //response =  "900-0000000-0000000";
+
         } while ("".equals(response));
 
         PromiseHistory promiseHistory = promiseHistoryClient.getPromiseHistoryByOrderId(response);
+
+
         if (promiseHistory.getOrder() == null) {
             return String.format(UNKNOWN_ORDER_MESSAGE, response);
         }
+
         return renderOrderTable(promiseHistory.getOrder()) + renderPromiseHistoryTable(promiseHistory);
     }
 
