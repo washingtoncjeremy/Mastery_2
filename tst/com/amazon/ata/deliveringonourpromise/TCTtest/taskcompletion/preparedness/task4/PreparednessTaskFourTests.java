@@ -49,7 +49,7 @@ public class PreparednessTaskFourTests {
 
 
     @Test(dataProvider = "requiredInterfaces")
-    public void preparednessTaskFour_deliveringOnOurPromiseClassDiagram_containsRequiredInterfaces(
+    public void prepaornnessTaskFour_deliveringOnOurPromiseClassDiagram_containsRequiredInterfaces(
             String interfacePattern) {
 
         // GIVEN - class name to look for

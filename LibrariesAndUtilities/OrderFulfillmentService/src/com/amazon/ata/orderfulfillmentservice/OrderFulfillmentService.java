@@ -63,7 +63,6 @@ public class OrderFulfillmentService {
      *   We wouldn't expect OFS to work in exactly this way (though it might be aware of the earlier DPS promise
      *   made and endeavor to honor it).
      */
-
     private OrderPromise buildOrderPromise(OrderData orderData, OrderItemData orderItemData) {
         String customerOrderItemId = orderItemData.getCustomerOrderItemId();
         if (!isOfsPromiseActiveForOrderItem(orderData, customerOrderItemId)) {

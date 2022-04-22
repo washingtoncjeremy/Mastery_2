@@ -39,17 +39,3 @@ Happy case, verifying that the OrderDao can return an order.
 
 ### Then
 * The result is not null
-
-## get_OrderNumberInvalid_returnsNull
-Alternate case, verifying the order dao will return null with 
-invalid order Id
-
-### Given
-* An invalid order Id
-
-### When 
-1. We call 'get()' with invalid order Id
-
-### Then
-* The result is null
-

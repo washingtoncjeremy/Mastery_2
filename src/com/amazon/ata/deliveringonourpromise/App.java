@@ -1,6 +1,5 @@
 package com.amazon.ata.deliveringonourpromise;
 
-import com.amazon.ata.deliveringonourpromise.OrderFulfillmentService.OrderFulfillmentServiceClient;
 import com.amazon.ata.deliveringonourpromise.activity.GetPromiseHistoryByOrderIdActivity;
 import com.amazon.ata.deliveringonourpromise.dao.OrderDao;
 import com.amazon.ata.deliveringonourpromise.dao.PromiseDao;
@@ -9,7 +8,6 @@ import com.amazon.ata.deliveringonourpromise.deliverypromiseservice.DeliveryProm
 import com.amazon.ata.deliveringonourpromise.ordermanipulationauthority.OrderManipulationAuthorityClient;
 import com.amazon.ata.deliveringonourpromise.promisehistoryservice.PromiseHistoryClient;
 import com.amazon.ata.deliverypromiseservice.service.DeliveryPromiseService;
-import com.amazon.ata.orderfulfillmentservice.OrderFulfillmentService;
 import com.amazon.ata.ordermanipulationauthority.OrderManipulationAuthority;
 
 /**
@@ -42,10 +40,7 @@ public class App {
         return new PromiseDao(getDeliveryPromiseServiceClient(),
                               getOrderManipulationAuthorityClient()
         );
-
     }
-
-
 
     // service clients
     public static OrderManipulationAuthorityClient getOrderManipulationAuthorityClient() {
@@ -55,24 +50,12 @@ public class App {
         return new DeliveryPromiseServiceClient(getDeliveryPromiseService());
     }
 
-    public static OrderFulfillmentServiceClient getOrderFulfillmentServiceClient() {
-
-        return new OrderFulfillmentServiceClient(getOrderFulfillmentService());
-
-    }
-
     // dependency services
     public static OrderManipulationAuthority getOrderManipulationAuthority() {
         return new OrderManipulationAuthority(getOrderDatastore());
     }
     public static DeliveryPromiseService getDeliveryPromiseService() {
         return new DeliveryPromiseService(getOrderDatastore());
-    }
-
-    public static OrderFulfillmentService getOrderFulfillmentService() {
-
-        return new OrderFulfillmentService(getOrderDatastore(), getDeliveryPromiseService());
-
     }
 
     // sample data
