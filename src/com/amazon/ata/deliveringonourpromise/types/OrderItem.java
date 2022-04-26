@@ -122,6 +122,7 @@ public class OrderItem {
      * Builder for OrderItems. See OrderItem documentation.
      */
     public static class Builder {
+
         private String customerOrderItemId;
         private String orderId;
         private String asin;

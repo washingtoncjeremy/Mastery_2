@@ -9,6 +9,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import static org.testng.Assert.assertEquals;
@@ -101,11 +102,13 @@ public class MasteryTaskThreeTests {
     }
 
     @Test
+
     void masteryTaskThree_orderClass_withCustomerOrderItemList_internalStateIsProtectedByDefensiveCopying() {
         // GIVEN
         OrderItem customerOrderItem = OrderItem.builder()
                                           .withCustomerOrderItemId("1")
                                           .build();
+
 
         List<OrderItem> orderItemList = new ArrayList<>();
         orderItemList.add(customerOrderItem);
