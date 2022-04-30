@@ -1,6 +1,7 @@
 package com.amazon.ata.deliveringonourpromise.dao;
 
 import com.amazon.ata.deliveringonourpromise.App;
+import com.amazon.ata.deliveringonourpromise.OrderFulfillmentService.OrderFulfillmentServiceClient;
 import com.amazon.ata.deliveringonourpromise.deliverypromiseservice.DeliveryPromiseServiceClient;
 import com.amazon.ata.deliveringonourpromise.ordermanipulationauthority.OrderManipulationAuthorityClient;
 import com.amazon.ata.deliveringonourpromise.types.Promise;
@@ -20,8 +21,10 @@ public class PromiseDaoTest {
 
     private PromiseDao dao;
 
-    private OrderManipulationAuthorityClient omaClient = App.getOrderManipulationAuthorityClient();
+    //private OrderManipulationAuthorityClient omaClient = App.getOrderManipulationAuthorityClient();
     private DeliveryPromiseServiceClient dpsClient = App.getDeliveryPromiseServiceClient();
+    private OrderFulfillmentServiceClient ofsClient = App.getOrderFulfillmentServiceClient();
+    private OrderManipulationAuthorityClient omaClient = App.getOrderManipulationAuthorityClient();
 
     // undelivered
     private String shippedOrderId;
@@ -49,20 +52,20 @@ public class PromiseDaoTest {
                                  .getCustomerOrderItemList()
                                  .get(0)
                                  .getCustomerOrderItemId();
-        shippedDeliveryPromise = dpsClient.getDeliveryPromiseByOrderItemId(shippedOrderItemId);
+        shippedDeliveryPromise = dpsClient.getPromiseByOrderItemId(shippedOrderItemId);
 
         deliveredOrderItemId = omaClient
                                    .getCustomerOrderByOrderId(deliveredOrderId)
                                    .getCustomerOrderItemList()
                                    .get(0)
                                    .getCustomerOrderItemId();
-        deliveredDeliveryPromise = dpsClient.getDeliveryPromiseByOrderItemId(deliveredOrderItemId);
+        deliveredDeliveryPromise = dpsClient.getPromiseByOrderItemId(deliveredOrderItemId);
         deliveredDeliveryDate = omaClient
                                     .getCustomerOrderByOrderId(deliveredOrderId)
                                     .getOrderShipmentList().get(0)
                                     .getDeliveryDate();
 
-        dao = new PromiseDao(dpsClient, omaClient);
+        dao = new PromiseDao(dpsClient, omaClient, ofsClient);
     }
 
     @Test

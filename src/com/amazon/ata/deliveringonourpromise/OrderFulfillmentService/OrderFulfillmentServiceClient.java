@@ -1,16 +1,26 @@
 package com.amazon.ata.deliveringonourpromise.OrderFulfillmentService;
 
 
+import com.amazon.ata.deliveringonourpromise.deliverypromiseservice.DeliveryPromiseServiceClient;
+import com.amazon.ata.deliveringonourpromise.deliverypromiseservice.PromiseInterface;
+import com.amazon.ata.deliveringonourpromise.types.Promise;
 import com.amazon.ata.orderfulfillmentservice.OrderFulfillmentService;
 import com.amazon.ata.orderfulfillmentservice.OrderPromise;
 
-public class OrderFulfillmentServiceClient {
+public class OrderFulfillmentServiceClient implements PromiseInterface  {
 
     private OrderFulfillmentService ofService;
+
+    public OrderFulfillmentServiceClient(){
+
+
+    }
 
     /**
      *
      * @param ofs service
+     *
+     *
      */
     public OrderFulfillmentServiceClient(OrderFulfillmentService ofs) {
 
@@ -23,7 +33,7 @@ public class OrderFulfillmentServiceClient {
      * @param orderId The orders id
      * @return Completed order for display
      */
-    public OrderPromise getOrderPromiseByOrderItemId(String orderId) {
+    public Promise getPromiseByOrderItemId(String orderId) {
 
         OrderPromise orderPromise = ofService.getOrderPromise(orderId);
 
@@ -31,9 +41,10 @@ public class OrderFulfillmentServiceClient {
 
             return null;
 
+
         }
 
-        return OrderPromise.builder().withPromiseLatestArrivalDate(orderPromise.getPromiseLatestArrivalDate())
+        return Promise.builder().withPromiseLatestArrivalDate(orderPromise.getPromiseLatestArrivalDate())
                 .withCustomerOrderItemId(orderPromise.getCustomerOrderItemId())
                 .withPromiseLatestShipDate(orderPromise.getPromiseLatestShipDate())
                 .withPromiseEffectiveDate(orderPromise.getPromiseEffectiveDate())

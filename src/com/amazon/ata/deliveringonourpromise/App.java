@@ -8,9 +8,14 @@ import com.amazon.ata.deliveringonourpromise.data.OrderDatastore;
 import com.amazon.ata.deliveringonourpromise.deliverypromiseservice.DeliveryPromiseServiceClient;
 import com.amazon.ata.deliveringonourpromise.ordermanipulationauthority.OrderManipulationAuthorityClient;
 import com.amazon.ata.deliveringonourpromise.promisehistoryservice.PromiseHistoryClient;
+import com.amazon.ata.deliveringonourpromise.types.Order;
 import com.amazon.ata.deliverypromiseservice.service.DeliveryPromiseService;
 import com.amazon.ata.orderfulfillmentservice.OrderFulfillmentService;
 import com.amazon.ata.ordermanipulationauthority.OrderManipulationAuthority;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * Provides inversion of control for the DeliveringOnOurPromise project by instantiating all of the
@@ -38,10 +43,12 @@ public class App {
     public static OrderDao getOrderDao() {
         return new OrderDao(getOrderManipulationAuthorityClient());
     }
+
     public static PromiseDao getPromiseDao() {
-        return new PromiseDao(getDeliveryPromiseServiceClient(),
-                              getOrderManipulationAuthorityClient()
-        );
+        List<OrderFulfillmentServiceClient> promiseClients = Arrays.asList(getDeliveryPromiseServiceClient(), getOrderFulfillmentServiceClient() );
+
+        //return new PromiseDao(getDeliveryPromiseServiceClient(), getOrderManipulationAuthorityClient(), getOrderFulfillmentServiceClient());
+        return new PromiseDao(promiseClients);
     }
 
     // service clients
@@ -54,7 +61,7 @@ public class App {
 
     public static OrderFulfillmentServiceClient getOrderFulfillmentServiceClient(){
 
-        return new OrderFulfillmentServiceClient(getOrderFulFillmentService());
+        return new OrderFulfillmentServiceClient(getOrderFulfillmentService());
 
     }
 
@@ -67,7 +74,7 @@ public class App {
         return new DeliveryPromiseService(getOrderDatastore());
     }
 
-    public static OrderFulfillmentService getOrderFulFillmentService() {
+    public static OrderFulfillmentService getOrderFulfillmentService() {
 
         return new OrderFulfillmentService(getOrderDatastore(), getDeliveryPromiseService());
 
