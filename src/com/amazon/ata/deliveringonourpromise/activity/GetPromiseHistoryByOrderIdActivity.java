@@ -1,11 +1,13 @@
 package com.amazon.ata.deliveringonourpromise.activity;
 
+import com.amazon.ata.deliveringonourpromise.comparators.PromiseAsinComparator;
 import com.amazon.ata.deliveringonourpromise.dao.ReadOnlyDao;
 import com.amazon.ata.deliveringonourpromise.types.Order;
 import com.amazon.ata.deliveringonourpromise.types.OrderItem;
 import com.amazon.ata.deliveringonourpromise.types.Promise;
 import com.amazon.ata.deliveringonourpromise.types.PromiseHistory;
 
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -35,25 +37,44 @@ public class GetPromiseHistoryByOrderIdActivity {
      * @return PromiseHistory containing the order and promise history for that order
      */
     public PromiseHistory getPromiseHistoryByOrderId(String orderId) {
+
         if (null == orderId) {
             throw new IllegalArgumentException("order ID cannot be null");
         }
 
         Order order = orderDao.get(orderId);
 
-        List<OrderItem> customerOrderItems = order.getCustomerOrderItemList();
-        OrderItem customerOrderItem = null;
-        if (customerOrderItems != null && !customerOrderItems.isEmpty()) {
-            customerOrderItem = customerOrderItems.get(0);
+        List<OrderItem> customerOrderItems;
+
+        if (order == null) {
+
+            customerOrderItems = null;
+
+        } else {
+
+            customerOrderItems = order.getCustomerOrderItemList();
+
         }
 
+
         PromiseHistory history = new PromiseHistory(order);
-        if (customerOrderItem != null) {
-            List<Promise> promises = promiseDao.get(customerOrderItem.getCustomerOrderItemId());
-            for (Promise promise : promises) {
-                promise.setConfidence(customerOrderItem.isConfidenceTracked(), customerOrderItem.getConfidence());
-                history.addPromise(promise);
+        OrderItem customerOrderItem;
+        if (customerOrderItems != null && !customerOrderItems.isEmpty()) {
+        for(int i = 0; i < customerOrderItems.size(); i++){
+
+            customerOrderItem = customerOrderItems.get(i);
+
+            if (customerOrderItem != null) {
+                List<Promise> promises = promiseDao.get(customerOrderItem.getCustomerOrderItemId());
+
+                for (Promise promise : promises) {
+                    promise.setConfidence(customerOrderItem.isConfidenceTracked(), customerOrderItem.getConfidence());
+                    history.addPromise(promise);
+
+                }
             }
+
+          }
         }
 
         return history;

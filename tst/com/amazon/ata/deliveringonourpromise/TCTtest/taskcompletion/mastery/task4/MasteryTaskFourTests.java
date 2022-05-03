@@ -46,7 +46,7 @@ public class MasteryTaskFourTests {
     public void masteryTaskFour_ofsClientClass_existsAndHasASingleMethod() {
         // GIVEN
         Class<?> ofsClientClass =
-            ClassQuery.inExactPackage("com.amazon.ata.deliveringonourpromise.orderfulfillmentservice")
+            ClassQuery.inExactPackage("com.amazon.ata.deliveringonourpromise.OrderFulfillmentService")
             .withExactSimpleName("OrderFulfillmentServiceClient")
             .findClassOrFail();
 
@@ -95,7 +95,7 @@ public class MasteryTaskFourTests {
     public void masteryTaskFour_promiseClients_arePolymorphicallyInterchangeable() {
         // GIVEN
         Class<?> ofsClientClass =
-            ClassQuery.inExactPackage("com.amazon.ata.deliveringonourpromise.orderfulfillmentservice")
+            ClassQuery.inExactPackage("com.amazon.ata.deliveringonourpromise.OrderFulfillmentService")
                 .withExactSimpleName("OrderFulfillmentServiceClient")
                 .findClassOrFail();
 

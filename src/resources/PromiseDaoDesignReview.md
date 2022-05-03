@@ -10,15 +10,17 @@ What's the problem with the way the PromiseDao currently works?
 
 What ways will the CS representatives use the new multiple-client PromiseDao?
 
-- 
+- The CS rep will be able to pull promises from the Order Fulfillment Center as well as the 
+  Order Manipulation Client and the Delivery Promise Service Client
 
 In a few sentences, how does the PromiseDao work right now?
 
-- 
+- Currently the Promise Data Access Object is only getting promises from 
+  the Order Manipulation Client and the Delivery Promise Service Client
 
 Consider a developer unfamiliar with the Missed Promise CLI. Can you add diagrams here that will help them understand how the PromiseDao works right now?
 
-- 
+- ![img.png](img.png)
 
 ## Proposed Solution
 

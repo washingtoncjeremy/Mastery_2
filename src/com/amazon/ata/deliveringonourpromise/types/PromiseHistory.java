@@ -1,6 +1,9 @@
 package com.amazon.ata.deliveringonourpromise.types;
 
+import com.amazon.ata.deliveringonourpromise.comparators.PromiseAsinComparator;
+
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -39,6 +42,7 @@ public class PromiseHistory {
             throw new IllegalArgumentException("Promises cannot be added for a null order.");
         }
         promises.add(newPromise);
+        Collections.sort(promises, new PromiseAsinComparator());
     }
 
     /**

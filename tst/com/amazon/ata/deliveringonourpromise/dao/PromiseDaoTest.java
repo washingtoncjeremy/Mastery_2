@@ -1,6 +1,7 @@
 package com.amazon.ata.deliveringonourpromise.dao;
 
 import com.amazon.ata.deliveringonourpromise.App;
+import com.amazon.ata.deliveringonourpromise.OrderFulfillmentService.OrderFulfillmentServiceClient;
 import com.amazon.ata.deliveringonourpromise.deliverypromiseservice.DeliveryPromiseServiceClient;
 import com.amazon.ata.deliveringonourpromise.ordermanipulationauthority.OrderManipulationAuthorityClient;
 import com.amazon.ata.deliveringonourpromise.types.Promise;
@@ -22,6 +23,7 @@ public class PromiseDaoTest {
 
     private OrderManipulationAuthorityClient omaClient = App.getOrderManipulationAuthorityClient();
     private DeliveryPromiseServiceClient dpsClient = App.getDeliveryPromiseServiceClient();
+    private OrderFulfillmentServiceClient ofsClient = App.getOrderFulfillmentServiceClient();
 
     // undelivered
     private String shippedOrderId;
@@ -49,20 +51,20 @@ public class PromiseDaoTest {
                                  .getCustomerOrderItemList()
                                  .get(0)
                                  .getCustomerOrderItemId();
-        shippedDeliveryPromise = dpsClient.getDeliveryPromiseByOrderItemId(shippedOrderItemId);
+        shippedDeliveryPromise = dpsClient.getPromiseByOrderItemId(shippedOrderItemId);
 
         deliveredOrderItemId = omaClient
                                    .getCustomerOrderByOrderId(deliveredOrderId)
                                    .getCustomerOrderItemList()
                                    .get(0)
                                    .getCustomerOrderItemId();
-        deliveredDeliveryPromise = dpsClient.getDeliveryPromiseByOrderItemId(deliveredOrderItemId);
+        deliveredDeliveryPromise = dpsClient.getPromiseByOrderItemId(deliveredOrderItemId);
         deliveredDeliveryDate = omaClient
                                     .getCustomerOrderByOrderId(deliveredOrderId)
                                     .getOrderShipmentList().get(0)
                                     .getDeliveryDate();
 
-        dao = new PromiseDao(dpsClient, omaClient);
+        dao = new PromiseDao(dpsClient, omaClient, ofsClient);
     }
 
     @Test
@@ -79,7 +81,7 @@ public class PromiseDaoTest {
     @Test
     public void get_validOrderItemId_returnsCorrectPromiseLatestArrivalDate() {
         // GIVEN delivered promise
-
+        dao = App.getPromiseDao();
         // WHEN
         List<Promise> promises = dao.get(deliveredOrderItemId);
 
@@ -94,7 +96,7 @@ public class PromiseDaoTest {
     @Test
     public void get_validOrderItemId_returnsCorrectCustomerOrderItemId() {
         // GIVEN delivered promise
-
+        dao = App.getPromiseDao();
         // WHEN
         List<Promise> promises = dao.get(deliveredOrderItemId);
 
@@ -107,7 +109,7 @@ public class PromiseDaoTest {
     @Test
     public void get_validOrderItemId_returnsCorrectLatestShipDate() {
         // GIVEN delivered promise
-
+        dao = App.getPromiseDao();
         // WHEN
         List<Promise> promises = dao.get(deliveredOrderItemId);
 
@@ -120,7 +122,7 @@ public class PromiseDaoTest {
     @Test
     public void get_validOrderItemId_returnsCorrectPromiseEffectiveDate() {
         // GIVEN delivered promise
-
+        dao = App.getPromiseDao();
         // WHEN
         List<Promise> promises = dao.get(deliveredOrderItemId);
 
@@ -133,7 +135,7 @@ public class PromiseDaoTest {
     @Test
     public void get_validOrderItemId_returnsCorrectIsActive() {
         // GIVEN delivered promise
-
+        dao = App.getPromiseDao();
         // WHEN
         List<Promise> promises = dao.get(deliveredOrderItemId);
 
@@ -146,7 +148,7 @@ public class PromiseDaoTest {
     @Test
     public void get_validOrderItemId_returnsCorrectPromiseProvidedBy() {
         // GIVEN delivered promise
-
+        dao = App.getPromiseDao();
         // WHEN
         List<Promise> promises = dao.get(deliveredOrderItemId);
 
@@ -159,7 +161,7 @@ public class PromiseDaoTest {
     @Test
     public void get_validOrderItemId_returnsCorrectAsin() {
         // GIVEN delivered promise
-
+        dao = App.getPromiseDao();
         // WHEN
         List<Promise> promises = dao.get(deliveredOrderItemId);
 
@@ -172,7 +174,7 @@ public class PromiseDaoTest {
     @Test
     public void get_deliveredShipment_returnsDeliveryDate() {
         // GIVEN delivered promise
-
+        dao = App.getPromiseDao();
         // WHEN
         List<Promise> promises = dao.get(deliveredOrderItemId);
 
@@ -185,7 +187,7 @@ public class PromiseDaoTest {
     @Test
     public void get_undeliveredShipment_returnsNullDeliveryDate() {
         // GIVEN un-delivered promise
-
+        dao = App.getPromiseDao();
         // WHEN
         List<Promise> promises = dao.get(shippedOrderItemId);
 
